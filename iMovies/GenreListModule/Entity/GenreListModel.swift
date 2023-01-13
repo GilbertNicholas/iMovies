@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class GenreResponse: Codable {
+    var genres: [Genre]
+}
+
+class Genre: Codable {
+    var id: Int
+    var name: String
+}
