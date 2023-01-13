@@ -11,16 +11,16 @@ class GenreListViewController: UIViewController {
     var presenter: GenreListViewToPresenterProtocol?
     
     override func viewDidLoad() {
-        
+        view.backgroundColor = .systemBackground
     }
 }
 
 extension GenreListViewController: GenreListPresenterToViewProtocol {
     func showGenres(genre: [Genre]) {
-        <#code#>
+        //
     }
     
     func showError(error: String) {
-        <#code#>
+        //
     }
 }
