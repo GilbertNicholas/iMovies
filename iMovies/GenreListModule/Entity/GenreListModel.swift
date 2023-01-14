@@ -8,10 +8,10 @@
 import Foundation
 
 class GenreResponse: Codable {
-    var genres: [Genre]
+    let genres: [Genre]
 }
 
 class Genre: Codable {
-    var id: Int
-    var name: String
+    let id: Int
+    let name: String
 }

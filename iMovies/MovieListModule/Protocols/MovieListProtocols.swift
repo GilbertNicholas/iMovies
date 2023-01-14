@@ -12,7 +12,7 @@ protocol MovieListViewToPresenterProtocol: AnyObject {
     var interactor: MovieListPresenterToInteractorProtocol? { get set }
     var router: MovieListPresenterToRouterProtocol? { get set }
     
-    func fetchMovieList(genreId: Int)
+    func fetchMovieList(genreId: Int, page: Int)
     func showMovieDetail(navCon: UINavigationController, movie: Movie)
     func getImage(url: URL?) -> Any
 }
@@ -20,19 +20,19 @@ protocol MovieListViewToPresenterProtocol: AnyObject {
 protocol MovieListPresenterToViewProtocol: AnyObject {
     var presenter: MovieListViewToPresenterProtocol? { get set }
     
-    func showMovieList(movieList: [Movie])
+    func showMovieList(movieList: [Movie], totalPageData: Int)
     func showError(error: String)
     func populateGenreData(genre: Genre)
 }
 
 protocol MovieListInteractorToPresenterProtocol: AnyObject {
-    func fetchMovieListSuccess(movieList: [Movie])
+    func fetchMovieListSuccess(movieListResponse: MovieListResponse)
     func fetchMovieListFailed(error: String)
 }
 
 protocol MovieListPresenterToInteractorProtocol: AnyObject {
     var presenter: MovieListInteractorToPresenterProtocol? { get set }
-    func fetchMovieList(genreId: Int)
+    func fetchMovieList(genreId: Int, page: Int)
 }
 
 protocol MovieListPresenterToRouterProtocol: AnyObject {

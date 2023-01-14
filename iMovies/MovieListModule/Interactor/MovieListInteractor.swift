@@ -14,21 +14,32 @@ class MovieListInteractor: MovieListPresenterToInteractorProtocol {
     
     var params: [String: String] = ["api_key": "6a6bf03b1bf7bfe41fcf8881cdcfa97d"]
     
-    func fetchMovieList(genreId: Int) {
+    func fetchMovieList(genreId: Int, page: Int) {
         params["with_genres"] = String(genreId)
-        AF.request(baseURL, parameters: params).responseDecodable(of: MovieListResponse.self) { [weak self] response in
+        params["page"] = String(page)
+        AF.request(baseURL, parameters: params).responseDecodable(of: MovieListResponse.self) { response in
             switch response.result {
-                case .success(let response):
-                    let movieList = response.results.map { movie in
-                        var newMovie = movie
-                        newMovie.posterUrl = self?.getPosterURL(stringUrl: "https://image.tmdb.org/t/p/w342\(newMovie.posterPath)")
-                        return newMovie
-                    }
-                    self?.presenter?.fetchMovieListSuccess(movieList: movieList)
+                case .success(var response):
+                response.results = self.mapNewPosterUrl(oldMovieList: response.results)
+                self.presenter?.fetchMovieListSuccess(movieListResponse: response)
+                
                 case .failure(let error):
-                    self?.presenter?.fetchMovieListFailed(error: error.localizedDescription)
+                self.presenter?.fetchMovieListFailed(error: error.localizedDescription)
             }
         }
+    }
+    
+    private func mapNewPosterUrl(oldMovieList: [Movie]) -> [Movie] {
+        let movieList = oldMovieList.map { movie in
+            var newMovie = movie
+            if let posterPathString = newMovie.posterPath {
+                newMovie.posterUrl = self.getPosterURL(stringUrl: "https://image.tmdb.org/t/p/w342\(posterPathString)")
+            } else {
+                newMovie.posterUrl = nil
+            }
+            return newMovie
+        }
+        return movieList
     }
     
     private func getPosterURL(stringUrl: String) -> URL? {

@@ -8,30 +8,37 @@
 import UIKit
 
 struct MovieListResponse: Codable {
-    var page: Int
+    let page: Int
     var results: [Movie]
+    let totalPages: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case page, results
+        case totalPages = "total_pages"
+    }
 }
 
 struct Movie: Codable {
-    var adult: Bool
-    var backdropPath: String
-    var genreIds: [Int]
-    var id: Int
-    var originalLanguage: String
-    var originalTitle: String
-    var overview: String
-    var popularity: Double
-    var posterPath: String
+    let adult: Bool
+    let backdropPath: String?
+    let genreIds: [Int]
+    let id: Int
+    let originalLanguage: String
+    let originalTitle: String
+    let overview: String
+    let popularity: Double
+    let posterPath: String?
     var posterUrl: URL?
     var posterPlaceholder: UIImage?
     var releaseDate: String
-    var title: String
-    var video: Bool
-    var voteAverage: Double
-    var voteCount: Int
+    var releaseYear: String?
+    let title: String
+    let video: Bool
+    let voteAverage: Double
+    let voteCount: Int
     
     private enum CodingKeys: String, CodingKey {
-        case adult, id, overview, popularity, title, video
+        case adult, id, overview, popularity, title, video, releaseYear
         case backdropPath = "backdrop_path"
         case genreIds = "genre_ids"
         case originalLanguage = "original_language"

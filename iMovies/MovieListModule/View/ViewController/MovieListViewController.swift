@@ -11,23 +11,97 @@ class MovieListViewController: UIViewController {
     
     var presenter: MovieListViewToPresenterProtocol?
     
+    private var genreMovieList: Genre?
+    private var movieListData: [Movie] = []
+    private var currentPage: Int = 1
+    private var totalPage: Int = 0
+    
+    private lazy var movieListTableView: UITableView = UITableView()
+    
     override func viewDidLoad() {
-        
+        setupView()
+        setupLayout()
+        initData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+    }
     
+    private func initData() {
+        guard let genre = genreMovieList else { return }
+        presenter?.fetchMovieList(genreId: genre.id, page: 1)
+    }
+    
+    private func setupView() {
+        guard let genreMovieList = genreMovieList else { return }
+        
+        self.title = genreMovieList.name
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
+        self.view.backgroundColor = .black
+        movieListTableView.delegate = self
+        movieListTableView.dataSource = self
+        movieListTableView.register(MovieListTableViewCell.self, forCellReuseIdentifier: MovieListTableViewCell.id)
+        movieListTableView.backgroundColor = .black
+    }
+    
+    private func setupLayout() {
+        view.addSubview(movieListTableView)
+        movieListTableView.translatesAutoresizingMaskIntoConstraints = false
+        movieListTableView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
+    }
 }
 
 extension MovieListViewController: MovieListPresenterToViewProtocol {
     func populateGenreData(genre: Genre) {
-        //
+        self.genreMovieList = genre
     }
     
-    func showMovieList(movieList: [Movie]) {
-        //
+    func showMovieList(movieList: [Movie], totalPageData: Int) {
+        self.totalPage = totalPageData
+        self.movieListData = movieList
+        self.movieListTableView.reloadData()
     }
     
     func showError(error: String) {
         //
+    }
+}
+
+extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return movieListData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieListTableViewCell.id, for: indexPath) as? MovieListTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let movieData = movieListData[indexPath.row]
+        let movieImage = presenter?.getImage(url: movieData.posterUrl)
+        
+        if let url = movieImage as? URL {
+            cell.movieImage.kf.setImage(with: url)
+        } else if let image = movieImage as? UIImage {
+            cell.movieImage.image = image
+        }
+        cell.movieTitleLabel.text = movieData.title
+        cell.releaseDateLabel.text = movieData.releaseYear
+        cell.ratingLabel.text = "\(movieData.voteAverage)/10"
+        cell.starImage.image = UIImage(systemName: "star.fill")
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height / 5
     }
 }
