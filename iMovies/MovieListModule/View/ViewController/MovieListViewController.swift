@@ -15,23 +15,19 @@ class MovieListViewController: UIViewController {
     private var movieListData: [Movie] = []
     private var currentPage: Int = 1
     private var totalPage: Int = 0
+    private var isLoading: Bool = false
     
     private lazy var movieListTableView: UITableView = UITableView()
     
     override func viewDidLoad() {
         setupView()
         setupLayout()
-        initData()
+        loadMovieListData(genreId: genreMovieList?.id, page: currentPage)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-    }
-    
-    private func initData() {
-        guard let genre = genreMovieList else { return }
-        presenter?.fetchMovieList(genreId: genre.id, page: 1)
     }
     
     private func setupView() {
@@ -57,6 +53,12 @@ class MovieListViewController: UIViewController {
             right: view.rightAnchor
         )
     }
+    
+    private func loadMovieListData(genreId: Int?, page: Int) {
+        guard let genreId = genreId else { return }
+        isLoading = true
+        presenter?.fetchMovieList(genreId: genreId, page: page)
+    }
 }
 
 extension MovieListViewController: MovieListPresenterToViewProtocol {
@@ -66,8 +68,9 @@ extension MovieListViewController: MovieListPresenterToViewProtocol {
     
     func showMovieList(movieList: [Movie], totalPageData: Int) {
         self.totalPage = totalPageData
-        self.movieListData = movieList
+        self.movieListData.append(contentsOf: movieList)
         self.movieListTableView.reloadData()
+        isLoading = false
     }
     
     func showError(error: String) {
@@ -103,5 +106,15 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height / 5
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > contentHeight - scrollView.frame.size.height && !isLoading && currentPage < totalPage {
+            self.currentPage += 1
+            loadMovieListData(genreId: genreMovieList?.id, page: currentPage)
+        }
     }
 }
