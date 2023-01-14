@@ -21,6 +21,13 @@ class MovieListPresenter: MovieListViewToPresenterProtocol {
     func showMovieDetail(navCon: UINavigationController, movie: Movie) {
         router?.pushToMovieDetailView(movie: movie)
     }
+    
+    func getImage(url: URL?) -> Any {
+        if let url = url {
+            return url
+        }
+        return UIImage()
+    }
 }
 
 extension MovieListPresenter: MovieListInteractorToPresenterProtocol {
@@ -28,7 +35,7 @@ extension MovieListPresenter: MovieListInteractorToPresenterProtocol {
         view?.showMovieList(movieList: movieList)
     }
     
-    func fetchMovieListFailes(error: String) {
+    func fetchMovieListFailed(error: String) {
         view?.showError(error: error)
     }
 }

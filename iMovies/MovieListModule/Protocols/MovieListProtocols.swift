@@ -14,6 +14,7 @@ protocol MovieListViewToPresenterProtocol: AnyObject {
     
     func fetchMovieList(genreId: Int)
     func showMovieDetail(navCon: UINavigationController, movie: Movie)
+    func getImage(url: URL?) -> Any
 }
 
 protocol MovieListPresenterToViewProtocol: AnyObject {
@@ -26,7 +27,7 @@ protocol MovieListPresenterToViewProtocol: AnyObject {
 
 protocol MovieListInteractorToPresenterProtocol: AnyObject {
     func fetchMovieListSuccess(movieList: [Movie])
-    func fetchMovieListFailes(error: String)
+    func fetchMovieListFailed(error: String)
 }
 
 protocol MovieListPresenterToInteractorProtocol: AnyObject {
