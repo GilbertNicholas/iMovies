@@ -21,6 +21,7 @@ protocol GenreListPresenterToViewProtocol: AnyObject {
     
     func showGenres(genre: [Genre])
     func showError(error: String)
+    func configureLoadingIndicator(isLoad: Bool)
 }
 
 protocol GenreListInteractorToPresenterProtocol: AnyObject {

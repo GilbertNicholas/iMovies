@@ -26,9 +26,11 @@ class GenreListPresenter: GenreListViewToPresenterProtocol {
 extension GenreListPresenter: GenreListInteractorToPresenterProtocol {
     func fetchGenreSuccess(genre: [Genre]) {
         view?.showGenres(genre: genre)
+        view?.configureLoadingIndicator(isLoad: false)
     }
     
     func fetchGenreFailed(error: String) {
         view?.showError(error: error)
+        view?.configureLoadingIndicator(isLoad: false)
     }
 }
