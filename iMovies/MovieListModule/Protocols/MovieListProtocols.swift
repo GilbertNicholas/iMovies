@@ -9,11 +9,11 @@ import UIKit
 
 protocol MovieListViewToPresenterProtocol: AnyObject {
     var view: MovieListPresenterToViewProtocol? { get set }
-    var interactor: MovieListPresenterToInteractor? { get set }
-    var router: MovieListPresenterToRouter? { get set }
+    var interactor: MovieListPresenterToInteractorProtocol? { get set }
+    var router: MovieListPresenterToRouterProtocol? { get set }
     
     func fetchMovieList(genreId: Int)
-    func showMovieDetail(navCon: UINavigationController)
+    func showMovieDetail(navCon: UINavigationController, movie: Movie)
 }
 
 protocol MovieListPresenterToViewProtocol: AnyObject {
@@ -21,19 +21,25 @@ protocol MovieListPresenterToViewProtocol: AnyObject {
     
     func showMovieList(movieList: [Movie])
     func showError(error: String)
+    func populateGenreData(genre: Genre)
 }
 
-protocol MovieListInteractorToPresenter: AnyObject {
+protocol MovieListInteractorToPresenterProtocol: AnyObject {
     func fetchMovieListSuccess(movieList: [Movie])
     func fetchMovieListFailes(error: String)
 }
 
-protocol MovieListPresenterToInteractor: AnyObject {
-    var presenter: MovieListInteractorToPresenter? { get set }
+protocol MovieListPresenterToInteractorProtocol: AnyObject {
+    var presenter: MovieListInteractorToPresenterProtocol? { get set }
     func fetchMovieList(genreId: Int)
 }
 
-protocol MovieListPresenterToRouter: AnyObject {
-    static func createModule() -> UIViewController
+protocol MovieListPresenterToRouterProtocol: AnyObject {
+    var presenter: MovieListRouterToPresenterProtocol? { get set }
+    static func createModule(genre: Genre) -> UIViewController
     func pushToMovieDetailView(movie: Movie)
+}
+
+protocol MovieListRouterToPresenterProtocol: AnyObject {
+    func passGenreData(genre: Genre)
 }

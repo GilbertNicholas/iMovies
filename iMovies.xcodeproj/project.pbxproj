@@ -10,7 +10,7 @@
 		02B6F61529727D9800F0D083 /* GenreListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F61429727D9800F0D083 /* GenreListCollectionViewCell.swift */; };
 		02B6F61F2972874700F0D083 /* MovieListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F61E2972874700F0D083 /* MovieListProtocols.swift */; };
 		02B6F6282972879E00F0D083 /* MovieListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F6272972879E00F0D083 /* MovieListRouter.swift */; };
-		02B6F62A297287AF00F0D083 /* MovieListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F629297287AF00F0D083 /* MovieListEntity.swift */; };
+		02B6F62A297287AF00F0D083 /* MovieListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F629297287AF00F0D083 /* MovieListModel.swift */; };
 		02B6F62C297287BC00F0D083 /* MovieListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F62B297287BC00F0D083 /* MovieListPresenter.swift */; };
 		02B6F62E297287C600F0D083 /* MovieListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F62D297287C600F0D083 /* MovieListInteractor.swift */; };
 		02B6F630297287CE00F0D083 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B6F62F297287CE00F0D083 /* MovieListViewController.swift */; };
@@ -32,7 +32,7 @@
 		02B6F61429727D9800F0D083 /* GenreListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreListCollectionViewCell.swift; sourceTree = "<group>"; };
 		02B6F61E2972874700F0D083 /* MovieListProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListProtocols.swift; sourceTree = "<group>"; };
 		02B6F6272972879E00F0D083 /* MovieListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListRouter.swift; sourceTree = "<group>"; };
-		02B6F629297287AF00F0D083 /* MovieListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListEntity.swift; sourceTree = "<group>"; };
+		02B6F629297287AF00F0D083 /* MovieListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListModel.swift; sourceTree = "<group>"; };
 		02B6F62B297287BC00F0D083 /* MovieListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPresenter.swift; sourceTree = "<group>"; };
 		02B6F62D297287C600F0D083 /* MovieListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListInteractor.swift; sourceTree = "<group>"; };
 		02B6F62F297287CE00F0D083 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
@@ -77,7 +77,7 @@
 		02B6F618297286B700F0D083 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				02B6F629297287AF00F0D083 /* MovieListEntity.swift */,
+				02B6F629297287AF00F0D083 /* MovieListModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -419,7 +419,7 @@
 			files = (
 				02B6F61529727D9800F0D083 /* GenreListCollectionViewCell.swift in Sources */,
 				02B6F62E297287C600F0D083 /* MovieListInteractor.swift in Sources */,
-				02B6F62A297287AF00F0D083 /* MovieListEntity.swift in Sources */,
+				02B6F62A297287AF00F0D083 /* MovieListModel.swift in Sources */,
 				02B6F6282972879E00F0D083 /* MovieListRouter.swift in Sources */,
 				02C8B2B729717B5800300B73 /* AppDelegate.swift in Sources */,
 				02C8B2DB2971B39F00300B73 /* GenreListProtocols.swift in Sources */,

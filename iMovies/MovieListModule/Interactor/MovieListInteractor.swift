@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+class MovieListInteractor: MovieListPresenterToInteractorProtocol {
+    var presenter: MovieListInteractorToPresenterProtocol?
+    
+    func fetchMovieList(genreId: Int) {
+        //
+    }
+}

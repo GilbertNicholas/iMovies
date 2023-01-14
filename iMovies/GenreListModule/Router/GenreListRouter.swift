@@ -24,6 +24,7 @@ class GenreListRouter: GenreListPresenterToRouterProtocol {
     }
     
     func pushToMovieList(navCon: UINavigationController, genre: Genre) {
-        //
+        let movieListVC = MovieListRouter.createModule(genre: genre)
+        navCon.pushViewController(movieListVC, animated: true)
     }
 }
