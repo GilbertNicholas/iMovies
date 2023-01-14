@@ -15,9 +15,25 @@ class MovieListViewController: UIViewController {
     private var movieListData: [Movie] = []
     private var currentPage: Int = 1
     private var totalPage: Int = 0
-    private var isLoading: Bool = false
+    private var isLoading: Bool = false {
+        didSet {
+            if isLoading {
+                loadIndicator.startAnimating()
+            } else {
+                loadIndicator.stopAnimating()
+            }
+        }
+    }
     
     private lazy var movieListTableView: UITableView = UITableView()
+    
+    lazy var loadIndicator: UIActivityIndicatorView = {
+        let loadIndicator = UIActivityIndicatorView()
+        loadIndicator.hidesWhenStopped = true
+        loadIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
+        loadIndicator.color = .white
+        return loadIndicator
+    }()
     
     override func viewDidLoad() {
         setupView()
@@ -45,13 +61,15 @@ class MovieListViewController: UIViewController {
     
     private func setupLayout() {
         view.addSubview(movieListTableView)
-        movieListTableView.translatesAutoresizingMaskIntoConstraints = false
         movieListTableView.anchor(
             top: view.safeAreaLayoutGuide.topAnchor,
             left: view.leftAnchor,
             bottom: view.bottomAnchor,
             right: view.rightAnchor
         )
+        
+        view.addSubview(loadIndicator)
+        loadIndicator.center(inView: view)
     }
     
     private func loadMovieListData(genreId: Int?, page: Int) {
@@ -113,6 +131,7 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         let contentHeight = scrollView.contentSize.height
         
         if offsetY > contentHeight - scrollView.frame.size.height && !isLoading && currentPage < totalPage {
+            self.isLoading = true
             self.currentPage += 1
             loadMovieListData(genreId: genreMovieList?.id, page: currentPage)
         }
