@@ -41,6 +41,10 @@ class MovieListViewController: UIViewController {
         loadMovieListData(genreId: genreMovieList?.id, page: currentPage)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
@@ -51,7 +55,7 @@ class MovieListViewController: UIViewController {
         
         self.title = genreMovieList.name
         navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
+        
         self.view.backgroundColor = .black
         movieListTableView.delegate = self
         movieListTableView.dataSource = self
@@ -124,6 +128,11 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height / 5
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let navCon = self.navigationController else { return }
+        presenter?.showMovieDetail(navCon: navCon, movie: movieListData[indexPath.row])
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

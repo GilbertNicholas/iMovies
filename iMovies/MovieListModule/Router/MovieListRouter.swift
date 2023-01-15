@@ -28,7 +28,9 @@ class MovieListRouter: MovieListPresenterToRouterProtocol {
         return view
     }
     
-    func pushToMovieDetailView(movie: Movie) {
-        //
+    func pushToMovieDetailView(navCon: UINavigationController, movie: Movie) {
+        let movieDetailVC = MovieDetailRouter.createModule(movieDetail: movie)
+        navCon.pushViewController(movieDetailVC, animated: true)
+        
     }
 }

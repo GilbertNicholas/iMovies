@@ -21,6 +21,7 @@ struct MovieListResponse: Codable {
 struct Movie: Codable {
     let adult: Bool
     let backdropPath: String?
+    var backdropUrl: URL?
     let genreIds: [Int]
     let id: Int
     let originalLanguage: String

@@ -17,7 +17,9 @@ extension UIView {
                 paddingBottom: CGFloat = 0,
                 paddingRight: CGFloat = 0,
                 width: CGFloat? = nil,
-                height: CGFloat? = nil) {
+                height: CGFloat? = nil,
+                widthAnc: NSLayoutAnchor<NSLayoutDimension>? = nil,
+                heightAnc: NSLayoutAnchor<NSLayoutDimension>? = nil) {
         
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -43,6 +45,14 @@ extension UIView {
         
         if let height = height {
             heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+        
+        if let widthAnc = widthAnc {
+            widthAnchor.constraint(equalTo: widthAnc).isActive = true
+        }
+        
+        if let heightAnc = heightAnc {
+            heightAnchor.constraint(equalTo: heightAnc).isActive = true
         }
     }
     

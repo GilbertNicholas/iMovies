@@ -38,7 +38,7 @@ protocol MovieListPresenterToInteractorProtocol: AnyObject {
 protocol MovieListPresenterToRouterProtocol: AnyObject {
     var presenter: MovieListRouterToPresenterProtocol? { get set }
     static func createModule(genre: Genre) -> UIViewController
-    func pushToMovieDetailView(movie: Movie)
+    func pushToMovieDetailView(navCon: UINavigationController ,movie: Movie)
 }
 
 protocol MovieListRouterToPresenterProtocol: AnyObject {

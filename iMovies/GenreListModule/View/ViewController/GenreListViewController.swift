@@ -37,7 +37,7 @@ class GenreListViewController: UIViewController, GenreListPresenterToViewProtoco
     }
     
     private func setupView() {
-        self.title = "Movie Category"
+        self.title = "Movie Genre"
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         view.backgroundColor = .systemBackground
         

@@ -8,5 +8,5 @@ target 'iMovies' do
   # Pods for iMovies
   pod 'Alamofire'
   pod 'Kingfisher'
-
+  pod "youtube-ios-player-helper"
 end

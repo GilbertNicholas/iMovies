@@ -19,7 +19,7 @@ class MovieListPresenter: MovieListViewToPresenterProtocol {
     }
     
     func showMovieDetail(navCon: UINavigationController, movie: Movie) {
-        router?.pushToMovieDetailView(movie: movie)
+        router?.pushToMovieDetailView(navCon: navCon, movie: movie)
     }
     
     func getImage(url: URL?) -> Any {
@@ -35,7 +35,7 @@ extension MovieListPresenter: MovieListInteractorToPresenterProtocol {
         let movieListDateUpdated = movieListResponse.results.map { movie in
             var newMovie = movie
             newMovie.releaseYear = getReleasedYear(date: newMovie.releaseDate, dateFormat: "yyyy")
-            newMovie.releaseDate = getReleasedYear(date: newMovie.releaseDate, dateFormat: "dd/MM/yyyy")
+            newMovie.releaseDate = getReleasedYear(date: newMovie.releaseDate, dateFormat: "MMM dd, yyyy")
             return newMovie
         }
         view?.showMovieList(movieList: movieListDateUpdated, totalPageData: movieListResponse.totalPages)

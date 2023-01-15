@@ -33,16 +33,22 @@ class MovieListInteractor: MovieListPresenterToInteractorProtocol {
         let movieList = oldMovieList.map { movie in
             var newMovie = movie
             if let posterPathString = newMovie.posterPath {
-                newMovie.posterUrl = self.getPosterURL(stringUrl: "https://image.tmdb.org/t/p/w342\(posterPathString)")
+                newMovie.posterUrl = self.getImageURL(stringUrl: "https://image.tmdb.org/t/p/w342\(posterPathString)")
             } else {
                 newMovie.posterUrl = nil
+            }
+            
+            if let backdropPathString = newMovie.backdropPath {
+                newMovie.backdropUrl = self.getImageURL(stringUrl: "https://image.tmdb.org/t/p/w342\(backdropPathString)")
+            } else {
+                newMovie.backdropUrl = nil
             }
             return newMovie
         }
         return movieList
     }
     
-    private func getPosterURL(stringUrl: String) -> URL? {
+    private func getImageURL(stringUrl: String) -> URL? {
         return URL(string: stringUrl)
     }
 }
