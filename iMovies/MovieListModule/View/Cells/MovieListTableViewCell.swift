@@ -17,7 +17,7 @@ class MovieListTableViewCell: UITableViewCell {
         let image = UIImageView()
         image.layer.cornerRadius = 15
         image.clipsToBounds = true
-        image.contentMode = .scaleToFill
+        image.contentMode = .scaleAspectFill
         return image
     }()
     

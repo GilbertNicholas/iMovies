@@ -15,6 +15,7 @@ class MovieDetailViewController: UIViewController {
     private var reviewData: [Review] = []
     private var totalPageReview: Int = 0
     private var currentPage: Int = 1
+    
     private var isLoading: Bool = false {
         didSet {
             if isLoading {
@@ -32,20 +33,6 @@ class MovieDetailViewController: UIViewController {
     private let videoPlayer = YTPlayerView()
     private let videoPlaceholder = UIView()
     
-    private let movieBackdropImage: UIImageView = {
-        let image = UIImageView()
-        
-        return image
-    }()
-    
-    private let imageGradientLayer: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradient.startPoint = CGPoint(x: 0.5, y: 1.0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 0.0)
-        return gradient
-    }()
-    
     private let movieInfoPlaceholder = UIView()
     
     lazy var loadIndicator: UIActivityIndicatorView = {
@@ -58,7 +45,6 @@ class MovieDetailViewController: UIViewController {
     
     private let movieDetailImage: UIImageView = {
         let image = UIImageView()
-        
         return image
     }()
     
@@ -127,10 +113,21 @@ class MovieDetailViewController: UIViewController {
     
     private let staticReviewLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
         label.text = StringPlaceholder.StaticReview.rawValue
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .yellow
+        return label
+    }()
+    
+    private let emptyTableViewPlaceholder = UIView()
+    
+    private let emptyTableViewLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = StringPlaceholder.StaticReview.rawValue
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textAlignment = .justified
+        label.text = StringPlaceholder.EmptyReviewList.rawValue
         return label
     }()
     
@@ -148,10 +145,14 @@ class MovieDetailViewController: UIViewController {
         movieReviewTableView.dataSource = self
         movieReviewTableView.register(ReviewListTableViewCell.self, forCellReuseIdentifier: ReviewListTableViewCell.id)
         movieReviewTableView.backgroundColor = .black
+        movieReviewTableView.backgroundView = emptyTableViewPlaceholder
         videoPlayer.backgroundColor = .black
     }
     
     private func setupLayout() {
+        emptyTableViewPlaceholder.addSubview(emptyTableViewLabel)
+        emptyTableViewLabel.center(inView: emptyTableViewPlaceholder)
+        
         view.addSubview(scrollView)
         scrollView.centerX(inView: view)
         scrollView.anchor(
@@ -275,8 +276,10 @@ class MovieDetailViewController: UIViewController {
         loadIndicator.center(inView: movieReviewTableView)
     }
     
-    @objc func fetchVideoTrailer() {
-        presenter?.fetchMovieVideo(movieId: movieDetailData?.id)
+    func configureTableViewHeight() {
+        movieReviewTableView.anchor(
+            height: view.frame.height - 30
+        )
     }
 }
 
@@ -341,13 +344,15 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        if offsetY > contentHeight - scrollView.frame.size.height && !isLoading && currentPage < totalPageReview {
-            self.isLoading = true
-            self.currentPage += 1
-            presenter?.fetchMovieReview(movieId: movieDetailData?.id, page: currentPage)
+        if scrollView != self.scrollView {
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+            
+            if offsetY > contentHeight - scrollView.frame.size.height && !isLoading && currentPage < totalPageReview {
+                self.isLoading = true
+                self.currentPage += 1
+                presenter?.fetchMovieReview(movieId: movieDetailData?.id, page: currentPage)
+            }
         }
     }
 }

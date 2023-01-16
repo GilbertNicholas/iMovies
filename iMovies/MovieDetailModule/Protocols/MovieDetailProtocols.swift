@@ -24,6 +24,7 @@ protocol MovieDetailPresenterToViewProtocol: AnyObject {
     func showError(error: String)
     func loadVideoData(videoUrl: String)
     func loadMovieReview(reviewList: [Review], totalPage: Int)
+    func configureTableViewHeight()
 }
 
 protocol MovieDetailInteractorToPresenterProtocol: AnyObject {

@@ -13,8 +13,8 @@ class GenreListInteractor: GenreListPresenterToInteractorProtocol {
     let baseUrl = Utilities.getInfoPlist(plistKey: PlistKey.BaseURLGenreList.rawValue)
     
     let params: [String: String] = [
-        "api_key": Utilities.getInfoPlist(plistKey: PlistKey.APIKey.rawValue),
-        "language": "en-US"
+        StringAPIRequest.APIKeyParam.rawValue: Utilities.getInfoPlist(plistKey: PlistKey.APIKey.rawValue),
+        StringAPIRequest.languageParam.rawValue: StringAPIRequest.engUSValue.rawValue
     ]
     
     func fetchGenre() {

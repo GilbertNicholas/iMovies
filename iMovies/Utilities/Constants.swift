@@ -18,6 +18,7 @@ enum StringPlaceholder: String {
     case StaticOverview = "OVERVIEW"
     case StaticReview = "REVIEW"
     case StaticReleased = "Released"
+    case EmptyReviewList = "No Review Yet!"
     
     case GenreListCellID = "GenreListCell"
     case MovieListCellID = "MovieListCell"
@@ -50,4 +51,12 @@ enum PlistKey: String {
     case BaseURLMovieList
     case BaseURLGenreList
     case APIKey
+}
+
+enum StringAPIRequest: String {
+    case APIKeyParam = "api_key"
+    case languageParam = "language"
+    case engUSValue = "en-US"
+    case GenreParam = "with_genres"
+    case PageParam = "page"
 }

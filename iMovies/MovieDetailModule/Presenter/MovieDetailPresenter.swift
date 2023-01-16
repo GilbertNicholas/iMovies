@@ -38,6 +38,9 @@ class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
 
 extension MovieDetailPresenter: MovieDetailInteractorToPresenterProtocol {
     func fetchReviewListSuccess(reviewList: ReviewListReponse) {
+        if !reviewList.results.isEmpty {
+            view?.configureTableViewHeight()
+        }
         view?.loadMovieReview(reviewList: reviewList.results, totalPage: reviewList.totalPages)
     }
     

@@ -12,11 +12,12 @@ class MovieListInteractor: MovieListPresenterToInteractorProtocol {
     
     let baseURL = Utilities.getInfoPlist(plistKey: PlistKey.BaseURLMovieList.rawValue)
     
-    var params: [String: String] = ["api_key": Utilities.getInfoPlist(plistKey: PlistKey.APIKey.rawValue)]
+    var params: [String: String] = [StringAPIRequest.APIKeyParam.rawValue: Utilities.getInfoPlist(plistKey: PlistKey.APIKey.rawValue)]
     
     func fetchMovieList(genreId: Int, page: Int) {
-        params["with_genres"] = String(genreId)
-        params["page"] = String(page)
+        params[StringAPIRequest.GenreParam.rawValue] = String(genreId)
+        params[StringAPIRequest.PageParam.rawValue] = String(page)
+        
         AF.request(baseURL, parameters: params).responseDecodable(of: MovieListResponse.self) { response in
             switch response.result {
                 case .success(var response):
