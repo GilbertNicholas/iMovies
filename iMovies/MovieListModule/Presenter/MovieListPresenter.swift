@@ -23,10 +23,7 @@ class MovieListPresenter: MovieListViewToPresenterProtocol {
     }
     
     func getImage(url: URL?) -> Any {
-        if let url = url {
-            return url
-        }
-        return UIImage()
+        return Utilities.guardUrlNil(url: url)
     }
 }
 

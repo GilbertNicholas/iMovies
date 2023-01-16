@@ -72,7 +72,7 @@ class GenreListViewController: UIViewController, GenreListPresenterToViewProtoco
     }
     
     func showError(error: String) {
-//        Utilities.showAlert(title: "Fetch Categories Error", message: error, viewController: self)
+        Utilities.showAlert(title: "Fetch Genre Error", message: error, viewController: self)
     }
     
     func configureLoadingIndicator(isLoad: Bool) {

@@ -37,12 +37,6 @@ class MovieListInteractor: MovieListPresenterToInteractorProtocol {
             } else {
                 newMovie.posterUrl = nil
             }
-            
-            if let backdropPathString = newMovie.backdropPath {
-                newMovie.backdropUrl = self.getImageURL(stringUrl: "https://image.tmdb.org/t/p/w342\(backdropPathString)")
-            } else {
-                newMovie.backdropUrl = nil
-            }
             return newMovie
         }
         return movieList

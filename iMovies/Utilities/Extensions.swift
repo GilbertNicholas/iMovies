@@ -84,10 +84,4 @@ extension UIView {
             self.rightAnchor.constraint(equalTo: rightAnchor, constant: -paddingRight).isActive = true
         }
     }
-    
-    func addConstraintsToFillView(_ view: UIView, top: NSLayoutYAxisAnchor) {
-        translatesAutoresizingMaskIntoConstraints = false
-        anchor(top: top, left: view.leftAnchor,
-               bottom: view.bottomAnchor, right: view.rightAnchor)
-    }
 }

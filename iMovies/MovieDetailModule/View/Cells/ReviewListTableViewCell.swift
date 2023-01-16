@@ -21,7 +21,7 @@ class ReviewListTableViewCell: UITableViewCell {
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .justified
-        label.sizeToFit()
+        label.layer.opacity = 0.8
         return label
     }()
     
@@ -32,37 +32,47 @@ class ReviewListTableViewCell: UITableViewCell {
         return view
     }()
     
-    private let seeMoreButton: UIButton = {
-        var config = UIButton.Configuration.plain()
-        config.buttonSize = .small
-        config.title = "see more"
-        config.baseForegroundColor = .systemBlue
-        return UIButton(configuration: config)
+    let profileImage: UIImageView = {
+        let image = UIImageView()
+        image.tintColor = .lightGray
+        return image
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupUI()
-        setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
-        seeMoreButton.addTarget(self, action: #selector(seeMoreButtonTapped), for: .touchUpInside)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.borderColor = UIColor.gray.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+        profileImage.clipsToBounds = true
     }
     
     private func setupUI() {
         self.backgroundColor = .black
         
-        self.addSubview(nameLabel)
-        nameLabel.anchor(
+        self.addSubview(profileImage)
+        profileImage.anchor(
             top: self.topAnchor,
             left: self.leftAnchor,
             paddingTop: 10,
+            paddingLeft: 10,
+            width: 30,
+            height: 30
+        )
+        
+        self.addSubview(nameLabel)
+        nameLabel.anchor(
+            top: profileImage.topAnchor,
+            left: profileImage.rightAnchor,
             paddingLeft: 10
         )
         
@@ -84,22 +94,5 @@ class ReviewListTableViewCell: UITableViewCell {
             right: self.rightAnchor,
             height: 1
         )
-        
-//        self.addSubview(seeMoreButton)
-//        seeMoreButton.anchor(
-//            top: reviewLabel.bottomAnchor,
-//            left: reviewLabel.leftAnchor,
-//            bottom: self.bottomAnchor,
-//            paddingTop: 5,
-//            paddingBottom: 20
-//        )
-    }
-    
-    func configureLabelExpand() {
-        
-    }
-    
-    @objc func seeMoreButtonTapped() {
-        self.reviewLabel.numberOfLines = 0
     }
 }

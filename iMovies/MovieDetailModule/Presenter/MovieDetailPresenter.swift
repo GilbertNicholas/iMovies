@@ -8,11 +8,6 @@
 import UIKit
 
 class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
-    func fetchMovieReview(movieId: Int?, page: Int) {
-        if let movieId = movieId {
-            interactor?.fetchMovieVideo(type: .RequestReview, movieId: movieId, model: ReviewListReponse.self, page: page)
-        }
-    }
     
     var view: MovieDetailPresenterToViewProtocol?
     
@@ -28,11 +23,16 @@ class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
         }
     }
     
-    func getImage(url: URL?) -> Any {
-        if let url = url {
-            return url
+    func fetchMovieReview(movieId: Int?, page: Int) {
+        if let movieId = movieId {
+            interactor?.fetchMovieVideo(type: .RequestReview, movieId: movieId, model: ReviewListReponse.self, page: page)
+        } else {
+            self.fetchDataFailed(error: "Failed Showing Review")
         }
-        return UIImage()
+    }
+    
+    func getImage(url: URL?) -> Any {
+        return Utilities.guardUrlNil(url: url)
     }
 }
 

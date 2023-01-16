@@ -19,31 +19,21 @@ struct MovieListResponse: Codable {
 }
 
 struct Movie: Codable {
-    let adult: Bool
-    let backdropPath: String?
-    var backdropUrl: URL?
     let genreIds: [Int]
     let id: Int
-    let originalLanguage: String
-    let originalTitle: String
     let overview: String
-    let popularity: Double
     let posterPath: String?
     var posterUrl: URL?
     var posterPlaceholder: UIImage?
     var releaseDate: String
     var releaseYear: String?
     let title: String
-    let video: Bool
     let voteAverage: Double
     let voteCount: Int
     
     private enum CodingKeys: String, CodingKey {
-        case adult, id, overview, popularity, title, video, releaseYear
-        case backdropPath = "backdrop_path"
+        case id, overview, title, releaseYear
         case genreIds = "genre_ids"
-        case originalLanguage = "original_language"
-        case originalTitle = "original_title"
         case posterPath = "poster_path"
         case releaseDate = "release_date"
         case voteAverage = "vote_average"

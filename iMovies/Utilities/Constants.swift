@@ -11,3 +11,7 @@ enum RequestType: String {
     case RequestReview = "reviews"
     case RequestVideo = "videos"
 }
+//
+//enum ErrorType: String {
+//    
+//}

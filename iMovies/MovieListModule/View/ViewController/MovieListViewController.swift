@@ -96,7 +96,7 @@ extension MovieListViewController: MovieListPresenterToViewProtocol {
     }
     
     func showError(error: String) {
-        //
+        Utilities.showAlert(title: "Fetch Movie List Error", message: error, viewController: self)
     }
 }
 

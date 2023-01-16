@@ -104,8 +104,8 @@ class MovieDetailViewController: UIViewController {
     private let overviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.textAlignment = .justified
         label.numberOfLines = 0
+        label.layer.opacity = 0.8
         return label
     }()
     
@@ -290,13 +290,6 @@ extension MovieDetailViewController: MovieDetailPresenterToViewProtocol {
     
     func showMovieDetail(movieDetail: Movie) {
         self.movieDetailData = movieDetail
-        let backDropImage = presenter?.getImage(url: movieDetail.backdropUrl)
-        
-        if let backdropUrl = backDropImage as? URL {
-            movieBackdropImage.kf.setImage(with: backdropUrl)
-        } else if let backDropImage = backDropImage as? UIImage {
-            movieBackdropImage.image = backDropImage
-        }
         
         let movieImage = presenter?.getImage(url: movieDetail.posterUrl)
         
@@ -319,7 +312,7 @@ extension MovieDetailViewController: MovieDetailPresenterToViewProtocol {
     }
 
     func showError(error: String) {
-        //
+        Utilities.showAlert(title: "Fetch Movie Detail Error", message: error, viewController: self)
     }
     
     func loadVideoData(videoUrl: String) {
@@ -342,7 +335,7 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
         cell.selectionStyle = .none
         cell.nameLabel.text = usedReviewData.author
         cell.reviewLabel.text = usedReviewData.content
-        cell.configureLabelExpand()
+        cell.profileImage.image = UIImage(systemName: "person.fill")
         
         return cell
     }

@@ -17,7 +17,7 @@ class MovieDetailInteractor: MovieDetailPresenterToInteractorProtocol {
         let addUrl = type == .RequestReview ? RequestType.RequestReview.rawValue : RequestType.RequestVideo.rawValue
         let baseURL = "https://api.themoviedb.org/3/movie/\(movieId)/\(addUrl)"
         params["page"] = String(page)
-        print(baseURL)
+        
         AF.request(baseURL, parameters: params).responseDecodable(of: model) { response in
             switch response.result {
             case .success(let resp):
@@ -28,7 +28,6 @@ class MovieDetailInteractor: MovieDetailPresenterToInteractorProtocol {
                 }
             case .failure(let error):
                 self.presenter?.fetchDataFailed(error: error.localizedDescription)
-                print(error)
             }
         }
     }
