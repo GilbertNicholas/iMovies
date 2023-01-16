@@ -14,6 +14,7 @@ protocol MovieDetailViewToPresenterProtocol: AnyObject {
     
     func fetchMovieVideo(movieId: Int?)
     func getImage(url: URL?) -> Any
+    func fetchMovieReview(movieId: Int?, page: Int)
 }
 
 protocol MovieDetailPresenterToViewProtocol: AnyObject {
@@ -22,16 +23,18 @@ protocol MovieDetailPresenterToViewProtocol: AnyObject {
     func showMovieDetail(movieDetail: Movie)
     func showError(error: String)
     func loadVideoData(videoUrl: String)
+    func loadMovieReview(reviewList: [Review], totalPage: Int)
 }
 
 protocol MovieDetailInteractorToPresenterProtocol: AnyObject {
     func fetchMovieVideoSuccess(movieVideo: Video)
-    func fetchMovieVideoFailed(error: String)
+    func fetchReviewListSuccess(reviewList: ReviewListReponse)
+    func fetchDataFailed(error: String)
 }
 
 protocol MovieDetailPresenterToInteractorProtocol: AnyObject {
     var presenter: MovieDetailInteractorToPresenterProtocol? { get set }
-    func fetchMovieVideo(movieId: Int)
+    func fetchMovieVideo<T: Codable>(type: RequestType, movieId: Int, model: T.Type, page: Int)
 }
 
 protocol MovieDetailRouterToPresenterProtocol: AnyObject {

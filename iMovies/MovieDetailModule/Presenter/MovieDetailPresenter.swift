@@ -8,6 +8,12 @@
 import UIKit
 
 class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
+    func fetchMovieReview(movieId: Int?, page: Int) {
+        if let movieId = movieId {
+            interactor?.fetchMovieVideo(type: .RequestReview, movieId: movieId, model: ReviewListReponse.self, page: page)
+        }
+    }
+    
     var view: MovieDetailPresenterToViewProtocol?
     
     var interactor: MovieDetailPresenterToInteractorProtocol?
@@ -16,9 +22,9 @@ class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
     
     func fetchMovieVideo(movieId: Int?) {
         if let movieId = movieId {
-            interactor?.fetchMovieVideo(movieId: movieId)
+            interactor?.fetchMovieVideo(type: .RequestVideo, movieId: movieId, model: MovieVideoResponse.self, page: 1)
         } else {
-            self.fetchMovieVideoFailed(error: "Failed Showing Trailer")
+            self.fetchDataFailed(error: "Failed Showing Trailer")
         }
     }
     
@@ -31,16 +37,15 @@ class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
 }
 
 extension MovieDetailPresenter: MovieDetailInteractorToPresenterProtocol {
-    func fetchMovieVideoSuccess(movieVideo: Video) {
-        view?.loadVideoData(videoUrl: movieVideo.key)
-//        if let videoUrl = movieVideo.videoUrl {
-//            view?.loadVideoData(videoUrl: videoUrl)
-//        } else {
-//            self.fetchMovieVideoFailed(error: "Video trailer not exist")
-//        }
+    func fetchReviewListSuccess(reviewList: ReviewListReponse) {
+        view?.loadMovieReview(reviewList: reviewList.results, totalPage: reviewList.totalPages)
     }
     
-    func fetchMovieVideoFailed(error: String) {
+    func fetchMovieVideoSuccess(movieVideo: Video) {
+        view?.loadVideoData(videoUrl: movieVideo.key)
+    }
+    
+    func fetchDataFailed(error: String) {
         view?.showError(error: error)
     }
 }

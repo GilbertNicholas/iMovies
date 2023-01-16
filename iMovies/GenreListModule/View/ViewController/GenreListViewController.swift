@@ -90,11 +90,12 @@ extension GenreListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:    GenreListCollectionViewCell.id, for: indexPath) as? GenreListCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreListCollectionViewCell.id, for: indexPath) as? GenreListCollectionViewCell else {
             return UICollectionViewCell()
         }
         
         cell.configureUI(genreLabelText: genreData[indexPath.row].name)
+        
         return cell
     }
     

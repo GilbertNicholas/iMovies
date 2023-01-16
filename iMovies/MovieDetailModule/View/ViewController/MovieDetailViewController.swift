@@ -12,6 +12,18 @@ class MovieDetailViewController: UIViewController {
     var presenter: MovieDetailViewToPresenterProtocol?
     
     private var movieDetailData: Movie?
+    private var reviewData: [Review] = []
+    private var totalPageReview: Int = 0
+    private var currentPage: Int = 1
+    private var isLoading: Bool = false {
+        didSet {
+            if isLoading {
+                loadIndicator.startAnimating()
+            } else {
+                loadIndicator.stopAnimating()
+            }
+        }
+    }
     
     private lazy var movieReviewTableView: UITableView = UITableView()
     private let scrollView = UIScrollView()
@@ -34,6 +46,16 @@ class MovieDetailViewController: UIViewController {
         return gradient
     }()
     
+    private let movieInfoPlaceholder = UIView()
+    
+    lazy var loadIndicator: UIActivityIndicatorView = {
+        let loadIndicator = UIActivityIndicatorView()
+        loadIndicator.hidesWhenStopped = true
+        loadIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
+        loadIndicator.color = .white
+        return loadIndicator
+    }()
+    
     private let movieDetailImage: UIImageView = {
         let image = UIImageView()
         
@@ -44,6 +66,8 @@ class MovieDetailViewController: UIViewController {
         let label = UILabel()
         label.textColor = .white
         label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = .yellow
         return label
     }()
     
@@ -56,19 +80,24 @@ class MovieDetailViewController: UIViewController {
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
     private let ratingCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.italicSystemFont(ofSize: 14)
+        label.layer.opacity = 0.7
         return label
     }()
     
     private let staticOverviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "Overview"
+        label.text = "OVERVIEW"
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textColor = .yellow
         return label
     }()
     
@@ -84,12 +113,24 @@ class MovieDetailViewController: UIViewController {
         let label = UILabel()
         label.textColor = .white
         label.text = "Released"
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
     private let releaseLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.layer.opacity = 0.7
+        return label
+    }()
+    
+    private let staticReviewLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = "REVIEW"
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textColor = .yellow
         return label
     }()
     
@@ -103,11 +144,10 @@ class MovieDetailViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationItem.largeTitleDisplayMode = .never
         
-//        movieReviewTableView.delegate = self
-//        movieReviewTableView.dataSource = self
-//        movieReviewTableView.register(MovieListTableViewCell.self, forCellReuseIdentifier: MovieListTableViewCell.id)
-//        movieReviewTableView.backgroundColor = .black
-//        imageGradientLayer.frame = movieBackdropImage.bounds
+        movieReviewTableView.delegate = self
+        movieReviewTableView.dataSource = self
+        movieReviewTableView.register(ReviewListTableViewCell.self, forCellReuseIdentifier: ReviewListTableViewCell.id)
+        movieReviewTableView.backgroundColor = .black
         videoPlayer.backgroundColor = .black
     }
     
@@ -140,54 +180,68 @@ class MovieDetailViewController: UIViewController {
         movieDetailImage.anchor(
             top: videoPlayer.bottomAnchor,
             left: contentView.leftAnchor,
-            paddingTop: 10,
+            paddingTop: 15,
             paddingLeft: 15,
             width: view.frame.width / 3.5,
             height: view.frame.height / 5
         )
         
-        contentView.addSubview(movieTitleLabel)
+        movieInfoPlaceholder.addSubview(movieTitleLabel)
         movieTitleLabel.anchor(
-            top: videoPlayer.bottomAnchor,
-            left: movieDetailImage.rightAnchor,
-            right: contentView.rightAnchor,
-            paddingTop: 15,
-            paddingLeft: 15,
-            paddingRight: 10
+            top: movieInfoPlaceholder.topAnchor,
+            left: movieInfoPlaceholder.leftAnchor,
+            right: movieInfoPlaceholder.rightAnchor
         )
 
-        contentView.addSubview(starImage)
+        movieInfoPlaceholder.addSubview(starImage)
         starImage.anchor(
             top: movieTitleLabel.bottomAnchor,
             left: movieTitleLabel.leftAnchor,
-            paddingTop: 5
+            paddingTop: 10
         )
 
-        contentView.addSubview(ratingLabel)
+        movieInfoPlaceholder.addSubview(ratingLabel)
         ratingLabel.anchor(
             top: starImage.topAnchor,
             left: starImage.rightAnchor,
             paddingLeft: 5
         )
         
-        contentView.addSubview(staticReleaseLabel)
+        movieInfoPlaceholder.addSubview(ratingCountLabel)
+        ratingCountLabel.anchor(
+            bottom: ratingLabel.bottomAnchor,
+            right: movieInfoPlaceholder.rightAnchor,
+            paddingRight: 5
+        )
+        
+        movieInfoPlaceholder.addSubview(staticReleaseLabel)
         staticReleaseLabel.anchor(
-            top: movieDetailImage.bottomAnchor,
-            left: movieDetailImage.leftAnchor,
+            top: starImage.bottomAnchor,
+            left: starImage.leftAnchor,
             paddingTop: 15
         )
         
-        contentView.addSubview(releaseLabel)
+        movieInfoPlaceholder.addSubview(releaseLabel)
         releaseLabel.anchor(
+            top: staticReleaseLabel.topAnchor,
             left: staticReleaseLabel.rightAnchor,
-            bottom: staticReleaseLabel.bottomAnchor,
+            bottom: movieInfoPlaceholder.bottomAnchor,
             paddingLeft: 5
+        )
+        
+        contentView.addSubview(movieInfoPlaceholder)
+        movieInfoPlaceholder.centerY(inView: movieDetailImage)
+        movieInfoPlaceholder.anchor(
+            left: movieDetailImage.rightAnchor,
+            right: contentView.rightAnchor,
+            paddingLeft: 15,
+            paddingRight: 10
         )
         
         contentView.addSubview(staticOverviewLabel)
         staticOverviewLabel.anchor(
-            top: staticReleaseLabel.bottomAnchor,
-            left: staticReleaseLabel.leftAnchor,
+            top: movieDetailImage.bottomAnchor,
+            left: movieDetailImage.leftAnchor,
             paddingTop: 20
         )
         
@@ -195,11 +249,30 @@ class MovieDetailViewController: UIViewController {
         overviewLabel.anchor(
             top: staticOverviewLabel.bottomAnchor,
             left: staticOverviewLabel.leftAnchor,
-            bottom: contentView.bottomAnchor,
             right: contentView.rightAnchor,
             paddingTop: 15,
             paddingRight: 15
         )
+        
+        contentView.addSubview(staticReviewLabel)
+        staticReviewLabel.anchor(
+            top: overviewLabel.bottomAnchor,
+            left: overviewLabel.leftAnchor,
+            paddingTop: 20
+        )
+        
+        contentView.addSubview(movieReviewTableView)
+        movieReviewTableView.anchor(
+            top: staticReviewLabel.bottomAnchor,
+            left: contentView.leftAnchor,
+            bottom: contentView.bottomAnchor,
+            right: contentView.rightAnchor,
+            paddingTop: 15,
+            height: view.frame.height / 2
+        )
+        
+        contentView.addSubview(loadIndicator)
+        loadIndicator.center(inView: movieReviewTableView)
     }
     
     @objc func fetchVideoTrailer() {
@@ -208,6 +281,12 @@ class MovieDetailViewController: UIViewController {
 }
 
 extension MovieDetailViewController: MovieDetailPresenterToViewProtocol {
+    func loadMovieReview(reviewList: [Review], totalPage: Int) {
+        self.totalPageReview = totalPage
+        self.reviewData.append(contentsOf: reviewList)
+        self.movieReviewTableView.reloadData()
+        isLoading = false
+    }
     
     func showMovieDetail(movieDetail: Movie) {
         self.movieDetailData = movieDetail
@@ -230,10 +309,13 @@ extension MovieDetailViewController: MovieDetailPresenterToViewProtocol {
         movieTitleLabel.text = movieDetail.title
         starImage.image = UIImage(systemName: "star.fill")
         ratingLabel.text = "\(movieDetail.voteAverage) / 10"
+        ratingCountLabel.text = "\(movieDetail.voteCount) votes"
         releaseLabel.text = movieDetail.releaseDate
         overviewLabel.text = movieDetail.overview
         
         presenter?.fetchMovieVideo(movieId: movieDetailData?.id)
+        isLoading = true
+        presenter?.fetchMovieReview(movieId: movieDetailData?.id, page: 1)
     }
 
     func showError(error: String) {
@@ -241,18 +323,40 @@ extension MovieDetailViewController: MovieDetailPresenterToViewProtocol {
     }
     
     func loadVideoData(videoUrl: String) {
-        videoPlayer.load(withVideoId: videoUrl)
+        self.videoPlayer.load(withVideoId: videoUrl)
     }
 }
 
-//extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        //
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        //
-//    }
-//}
+extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return reviewData.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ReviewListTableViewCell.id, for: indexPath) as? ReviewListTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let usedReviewData = reviewData[indexPath.row]
+        
+        cell.selectionStyle = .none
+        cell.nameLabel.text = usedReviewData.author
+        cell.reviewLabel.text = usedReviewData.content
+        cell.configureLabelExpand()
+        
+        return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > contentHeight - scrollView.frame.size.height && !isLoading && currentPage < totalPageReview {
+            self.isLoading = true
+            self.currentPage += 1
+            presenter?.fetchMovieReview(movieId: movieDetailData?.id, page: currentPage)
+        }
+    }
+}
 
 

@@ -122,6 +122,7 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.releaseDateLabel.text = movieData.releaseYear
         cell.ratingLabel.text = "\(movieData.voteAverage)/10"
         cell.starImage.image = UIImage(systemName: "star.fill")
+        cell.selectionStyle = .none
         
         return cell
     }
