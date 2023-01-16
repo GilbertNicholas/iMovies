@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,15 +13,52 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdU-Ja-JBd">
+                                <rect key="frame" x="80.333333333333329" y="318" width="232.33333333333337" height="99.333333333333314"/>
+                                <color key="tintColor" systemColor="systemYellowColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="iMovies">
+                                        <attributes>
+                                            <color key="NSBackgroundColor" red="0.87871180734694121" green="0.96841138601303101" blue="0.24468361056373183" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="NSColor" red="0.9591981323642278" green="1" blue="0.092466025895133752" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <font key="NSFont" size="70" name="ChalkboardSE-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="highlightedColor" systemColor="systemYellowColor"/>
+                                <size key="shadowOffset" width="50" height="-1"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Gilbert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkJ-le-54F">
+                                <rect key="frame" x="256" y="416" width="74" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.96841138599999999" green="0.95542733400000002" blue="0.1017158558" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dkJ-le-54F" secondAttribute="trailing" constant="63" id="7Om-Rb-tja"/>
+                            <constraint firstItem="kdU-Ja-JBd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="259" id="GGJ-Vl-suM"/>
+                            <constraint firstItem="kdU-Ja-JBd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Hlf-pG-13N"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dkJ-le-54F" secondAttribute="bottom" constant="381" id="JLG-ZC-NoW"/>
+                            <constraint firstItem="dkJ-le-54F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="256" id="SJ6-Rj-czp"/>
+                            <constraint firstItem="dkJ-le-54F" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="357" id="TWk-ze-CfI"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

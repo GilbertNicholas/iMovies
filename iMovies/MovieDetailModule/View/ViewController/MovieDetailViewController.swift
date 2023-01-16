@@ -95,7 +95,7 @@ class MovieDetailViewController: UIViewController {
     private let staticOverviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "OVERVIEW"
+        label.text = StringPlaceholder.StaticOverview.rawValue
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .yellow
         return label
@@ -112,7 +112,7 @@ class MovieDetailViewController: UIViewController {
     private let staticReleaseLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "Released"
+        label.text = StringPlaceholder.StaticReleased.rawValue
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
@@ -128,7 +128,7 @@ class MovieDetailViewController: UIViewController {
     private let staticReviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "REVIEW"
+        label.text = StringPlaceholder.StaticReview.rawValue
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .yellow
         return label
@@ -300,7 +300,7 @@ extension MovieDetailViewController: MovieDetailPresenterToViewProtocol {
         }
         
         movieTitleLabel.text = movieDetail.title
-        starImage.image = UIImage(systemName: "star.fill")
+        starImage.image = UIImage(systemName: StringImagePlaceholder.StarRating.rawValue)
         ratingLabel.text = "\(movieDetail.voteAverage) / 10"
         ratingCountLabel.text = "\(movieDetail.voteCount) votes"
         releaseLabel.text = movieDetail.releaseDate
@@ -312,7 +312,7 @@ extension MovieDetailViewController: MovieDetailPresenterToViewProtocol {
     }
 
     func showError(error: String) {
-        Utilities.showAlert(title: "Fetch Movie Detail Error", message: error, viewController: self)
+        Utilities.showAlert(title: StringError.ErrorTitle.rawValue, message: error, viewController: self)
     }
     
     func loadVideoData(videoUrl: String) {
@@ -335,7 +335,7 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
         cell.selectionStyle = .none
         cell.nameLabel.text = usedReviewData.author
         cell.reviewLabel.text = usedReviewData.content
-        cell.profileImage.image = UIImage(systemName: "person.fill")
+        cell.profileImage.image = UIImage(systemName: StringImagePlaceholder.UserProfile.rawValue)
         
         return cell
     }

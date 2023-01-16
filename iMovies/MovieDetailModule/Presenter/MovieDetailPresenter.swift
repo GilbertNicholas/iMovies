@@ -19,7 +19,7 @@ class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
         if let movieId = movieId {
             interactor?.fetchMovieVideo(type: .RequestVideo, movieId: movieId, model: MovieVideoResponse.self, page: 1)
         } else {
-            self.fetchDataFailed(error: "Failed Showing Trailer")
+            self.fetchDataFailed(error: StringError.FetchTrailerFailed.rawValue)
         }
     }
     
@@ -27,7 +27,7 @@ class MovieDetailPresenter: MovieDetailViewToPresenterProtocol {
         if let movieId = movieId {
             interactor?.fetchMovieVideo(type: .RequestReview, movieId: movieId, model: ReviewListReponse.self, page: page)
         } else {
-            self.fetchDataFailed(error: "Failed Showing Review")
+            self.fetchDataFailed(error: StringError.FetchReviewFailed.rawValue)
         }
     }
     

@@ -8,11 +8,11 @@
 import UIKit
 
 class GenreListCollectionViewCell: UICollectionViewCell {
-    static let id = "GenreListCell"
+    static let id = StringPlaceholder.GenreListCellID.rawValue
     
     private let categoryLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .yellow
         return label
     }()
     
@@ -21,7 +21,7 @@ class GenreListCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(StringError.InitCoderCellError.rawValue)
     }
     
     func configureUI(genreLabelText: String) {

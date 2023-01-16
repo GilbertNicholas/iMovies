@@ -31,8 +31,8 @@ extension MovieListPresenter: MovieListInteractorToPresenterProtocol {
     func fetchMovieListSuccess(movieListResponse: MovieListResponse) {
         let movieListDateUpdated = movieListResponse.results.map { movie in
             var newMovie = movie
-            newMovie.releaseYear = getReleasedYear(date: newMovie.releaseDate, dateFormat: "yyyy")
-            newMovie.releaseDate = getReleasedYear(date: newMovie.releaseDate, dateFormat: "MMM dd, yyyy")
+            newMovie.releaseYear = getReleasedYear(date: newMovie.releaseDate, dateFormat: StringDateFormat.DateYear.rawValue)
+            newMovie.releaseDate = getReleasedYear(date: newMovie.releaseDate, dateFormat: StringDateFormat.DateFormatUS.rawValue)
             return newMovie
         }
         view?.showMovieList(movieList: movieListDateUpdated, totalPageData: movieListResponse.totalPages)
@@ -44,8 +44,8 @@ extension MovieListPresenter: MovieListInteractorToPresenterProtocol {
     
     private func getReleasedYear(date: String, dateFormat: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let date = dateFormatter.date(from: date) else { return "Unknown Date" }
+        dateFormatter.dateFormat = StringDateFormat.DateFormatJSON.rawValue
+        guard let date = dateFormatter.date(from: date) else { return StringError.DateformatError.rawValue }
         dateFormatter.dateFormat = dateFormat
         return dateFormatter.string(from: date)
     }

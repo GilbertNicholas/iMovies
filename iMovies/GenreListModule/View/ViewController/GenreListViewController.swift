@@ -37,7 +37,7 @@ class GenreListViewController: UIViewController, GenreListPresenterToViewProtoco
     }
     
     private func setupView() {
-        self.title = "Movie Genre"
+        self.title = StringPlaceholder.MovieGenreTitle.rawValue
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         view.backgroundColor = .systemBackground
         
@@ -72,7 +72,7 @@ class GenreListViewController: UIViewController, GenreListPresenterToViewProtoco
     }
     
     func showError(error: String) {
-        Utilities.showAlert(title: "Fetch Genre Error", message: error, viewController: self)
+        Utilities.showAlert(title: StringError.ErrorTitle.rawValue, message: error, viewController: self)
     }
     
     func configureLoadingIndicator(isLoad: Bool) {

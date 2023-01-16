@@ -96,7 +96,7 @@ extension MovieListViewController: MovieListPresenterToViewProtocol {
     }
     
     func showError(error: String) {
-        Utilities.showAlert(title: "Fetch Movie List Error", message: error, viewController: self)
+        Utilities.showAlert(title: StringError.ErrorTitle.rawValue, message: error, viewController: self)
     }
 }
 
@@ -121,7 +121,7 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.movieTitleLabel.text = movieData.title
         cell.releaseDateLabel.text = movieData.releaseYear
         cell.ratingLabel.text = "\(movieData.voteAverage)/10"
-        cell.starImage.image = UIImage(systemName: "star.fill")
+        cell.starImage.image = UIImage(systemName: StringImagePlaceholder.StarRating.rawValue)
         cell.selectionStyle = .none
         
         return cell

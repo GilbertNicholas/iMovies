@@ -8,7 +8,7 @@
 import UIKit
 
 class ReviewListTableViewCell: UITableViewCell {
-    static let id = "ReviewListCell"
+    static let id = StringPlaceholder.ReviewListCellID.rawValue
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -45,7 +45,7 @@ class ReviewListTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(StringError.InitCoderCellError.rawValue)
     }
     
     override func layoutSubviews() {
@@ -63,7 +63,7 @@ class ReviewListTableViewCell: UITableViewCell {
         profileImage.anchor(
             top: self.topAnchor,
             left: self.leftAnchor,
-            paddingTop: 10,
+            paddingTop: 20,
             paddingLeft: 10,
             width: 30,
             height: 30
@@ -82,7 +82,7 @@ class ReviewListTableViewCell: UITableViewCell {
             left: nameLabel.leftAnchor,
             bottom: self.bottomAnchor,
             right: self.rightAnchor,
-            paddingTop: 20,
+            paddingTop: 15,
             paddingBottom: 20,
             paddingRight: 10
         )

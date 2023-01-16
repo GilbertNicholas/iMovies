@@ -11,7 +11,7 @@ import UIKit
 import Kingfisher
 
 class MovieListTableViewCell: UITableViewCell {
-    static let id = "MovieListCell"
+    static let id = StringPlaceholder.MovieListCellID.rawValue
     
     let movieImage: UIImageView = {
         let image = UIImageView()
@@ -56,7 +56,7 @@ class MovieListTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(StringError.InitCoderCellError.rawValue)
     }
     
     private func setupUI() {

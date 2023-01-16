@@ -10,7 +10,7 @@ import UIKit
 class Utilities {
     class func showAlert(title: String, message: String, viewController: UIViewController) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Close", style: .default, handler: nil)
+        let action = UIAlertAction(title: StringPlaceholder.Close.rawValue, style: .default, handler: nil)
         alertController.addAction(action)
         viewController.present(alertController, animated: true, completion: nil)
     }
@@ -19,6 +19,6 @@ class Utilities {
         if let url = url {
             return url
         }
-        return UIImage(systemName: "trash.slash.fill")?.withTintColor(.yellow) ?? UIImage()
+        return UIImage(systemName: StringImagePlaceholder.NoImage.rawValue)?.withTintColor(.yellow) ?? UIImage()
     }
 }
