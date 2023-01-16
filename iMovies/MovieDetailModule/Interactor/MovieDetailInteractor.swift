@@ -11,11 +11,12 @@ class MovieDetailInteractor: MovieDetailPresenterToInteractorProtocol {
     
     var presenter: MovieDetailInteractorToPresenterProtocol?
     
-    var params: [String: String] = ["api_key": "6a6bf03b1bf7bfe41fcf8881cdcfa97d"]
+    var params: [String: String] = ["api_key": Utilities.getInfoPlist(plistKey: PlistKey.APIKey.rawValue)]
+    let baseUrl = Utilities.getInfoPlist(plistKey: PlistKey.BaseURLMovieDetail.rawValue)
     
     func fetchMovieVideo<T: Codable>(type: RequestType, movieId: Int, model: T.Type, page: Int) {
         let addUrl = type == .RequestReview ? RequestType.RequestReview.rawValue : RequestType.RequestVideo.rawValue
-        let baseURL = "https://api.themoviedb.org/3/movie/\(movieId)/\(addUrl)"
+        let baseURL = baseUrl + "\(movieId)/\(addUrl)"
         params["page"] = String(page)
         
         AF.request(baseURL, parameters: params).responseDecodable(of: model) { response in

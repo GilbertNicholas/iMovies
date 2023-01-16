@@ -28,9 +28,7 @@ class GenreListCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 20
         self.backgroundColor = .black
         self.addSubview(categoryLabel)
-        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        categoryLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        categoryLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        categoryLabel.center(inView: self)
         categoryLabel.text = genreLabelText
     }
 }

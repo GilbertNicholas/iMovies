@@ -43,3 +43,11 @@ enum StringDateFormat: String {
     case DateFormatUS = "MMM dd, yyyy"
     case DateYear = "yyyy"
 }
+
+enum PlistKey: String {
+    case BaseURLPosterPath
+    case BaseURLMovieDetail
+    case BaseURLMovieList
+    case BaseURLGenreList
+    case APIKey
+}

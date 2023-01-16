@@ -10,9 +10,9 @@ import Alamofire
 class MovieListInteractor: MovieListPresenterToInteractorProtocol {
     var presenter: MovieListInteractorToPresenterProtocol?
     
-    let baseURL = "https://api.themoviedb.org/3/discover/movie"
+    let baseURL = Utilities.getInfoPlist(plistKey: PlistKey.BaseURLMovieList.rawValue)
     
-    var params: [String: String] = ["api_key": "6a6bf03b1bf7bfe41fcf8881cdcfa97d"]
+    var params: [String: String] = ["api_key": Utilities.getInfoPlist(plistKey: PlistKey.APIKey.rawValue)]
     
     func fetchMovieList(genreId: Int, page: Int) {
         params["with_genres"] = String(genreId)
@@ -33,7 +33,8 @@ class MovieListInteractor: MovieListPresenterToInteractorProtocol {
         let movieList = oldMovieList.map { movie in
             var newMovie = movie
             if let posterPathString = newMovie.posterPath {
-                newMovie.posterUrl = self.getImageURL(stringUrl: "https://image.tmdb.org/t/p/w342\(posterPathString)")
+                let basePosterUrl = Utilities.getInfoPlist(plistKey: PlistKey.BaseURLPosterPath.rawValue)
+                newMovie.posterUrl = self.getImageURL(stringUrl: basePosterUrl + posterPathString)
             } else {
                 newMovie.posterUrl = nil
             }

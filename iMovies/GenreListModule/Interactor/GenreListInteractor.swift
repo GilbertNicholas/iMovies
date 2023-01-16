@@ -10,9 +10,12 @@ import Alamofire
 class GenreListInteractor: GenreListPresenterToInteractorProtocol {
     var presenter: GenreListInteractorToPresenterProtocol?
     
-    let baseUrl = "https://api.themoviedb.org/3/genre/movie/list"
+    let baseUrl = Utilities.getInfoPlist(plistKey: PlistKey.BaseURLGenreList.rawValue)
     
-    let params: [String: String] = ["api_key": "6a6bf03b1bf7bfe41fcf8881cdcfa97d", "language": "en-US"]
+    let params: [String: String] = [
+        "api_key": Utilities.getInfoPlist(plistKey: PlistKey.APIKey.rawValue),
+        "language": "en-US"
+    ]
     
     func fetchGenre() {
         AF.request(baseUrl, parameters: params).responseDecodable(of: GenreResponse.self) { [weak self] genreResponse in

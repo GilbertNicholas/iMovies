@@ -33,7 +33,7 @@
                                 <size key="shadowOffset" width="50" height="-1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Gilbert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkJ-le-54F">
-                                <rect key="frame" x="256" y="416" width="74" height="21"/>
+                                <rect key="frame" x="258.66666666666669" y="412.33333333333331" width="74" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.96841138599999999" green="0.95542733400000002" blue="0.1017158558" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -42,12 +42,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dkJ-le-54F" secondAttribute="trailing" constant="63" id="7Om-Rb-tja"/>
                             <constraint firstItem="kdU-Ja-JBd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="259" id="GGJ-Vl-suM"/>
                             <constraint firstItem="kdU-Ja-JBd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Hlf-pG-13N"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dkJ-le-54F" secondAttribute="bottom" constant="381" id="JLG-ZC-NoW"/>
-                            <constraint firstItem="dkJ-le-54F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="256" id="SJ6-Rj-czp"/>
-                            <constraint firstItem="dkJ-le-54F" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="357" id="TWk-ze-CfI"/>
+                            <constraint firstItem="dkJ-le-54F" firstAttribute="trailing" secondItem="kdU-Ja-JBd" secondAttribute="trailing" constant="20" id="P6Q-Fk-CfT"/>
+                            <constraint firstItem="dkJ-le-54F" firstAttribute="top" secondItem="kdU-Ja-JBd" secondAttribute="bottom" constant="-5" id="jl7-dT-HPb"/>
                         </constraints>
                     </view>
                 </viewController>

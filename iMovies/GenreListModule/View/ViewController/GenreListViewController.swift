@@ -39,7 +39,7 @@ class GenreListViewController: UIViewController, GenreListPresenterToViewProtoco
     private func setupView() {
         self.title = StringPlaceholder.MovieGenreTitle.rawValue
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         
         let colViewLayout = UICollectionViewFlowLayout()
         colViewLayout.scrollDirection = .vertical
@@ -54,16 +54,15 @@ class GenreListViewController: UIViewController, GenreListPresenterToViewProtoco
         view.addSubview(categoryColView)
         categoryColView.delegate = self
         categoryColView.dataSource = self
-        categoryColView.translatesAutoresizingMaskIntoConstraints = false
-        categoryColView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        categoryColView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        categoryColView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        categoryColView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        categoryColView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
         
         view.addSubview(loadIndicator)
-        loadIndicator.translatesAutoresizingMaskIntoConstraints = false
-        loadIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadIndicator.center(inView: view)
     }
     
     func showGenres(genre: [Genre]) {
